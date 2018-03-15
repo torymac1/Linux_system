@@ -1,0 +1,77 @@
+#include "cream.h"
+#include "utils.h"
+#include "hashmap.h"
+#include "string.h"
+#include <stdio.h>
+
+void map_free_function(map_key_t key, map_val_t val) {
+    free(key.key_base);
+    free(val.val_base);
+}
+
+uint32_t jenkins_hash(map_key_t map_key) {
+    const uint8_t *key = map_key.key_base;
+    size_t length = map_key.key_len;
+    size_t i = 0;
+    uint32_t hash = 0;
+
+    while (i != length) {
+        hash += key[i++];
+        hash += hash << 10;
+        hash ^= hash >> 6;
+    }
+
+    hash += hash << 3;
+    hash ^= hash >> 11;
+    hash += hash << 15;
+    return hash;
+}
+
+int main(int argc, char *argv[]) {
+    // hashmap_t *global_map = create_map(100, jenkins_hash, map_free_function);
+    // map_key_t k0, k1, k2, k3;
+    // map_val_t v0, v1, v2;
+    // char a[2] = "1";
+    // char b[2] = "2";
+    // char c[] = "3123123123123123";
+    // char d[2] = "4";
+    // k0.key_base = malloc(sizeof(a));
+    // memcpy(k0.key_base, a, sizeof(a));
+    // k0.key_len = sizeof(a);
+    // k1.key_base = malloc(sizeof(b));
+    // memcpy(k1.key_base, b, sizeof(b));
+    // k1.key_len = sizeof(b);
+    // k2.key_base = malloc(sizeof(c));
+    // memcpy(k2.key_base, c, sizeof(c));
+    // k2.key_len = sizeof(c);
+    // k3.key_base = malloc(sizeof(d));
+    // memcpy(k3.key_base, d, sizeof(d));
+    // k3.key_len = sizeof(d);
+    // int a1 = 1;
+    // int b1 = 2;
+    // int c1 = 3;
+    // v0.val_base = malloc(sizeof(a1));
+    // memcpy(v0.val_base, &a1, sizeof(a1));
+    // v0.val_len = sizeof(a1);
+    // v1.val_base = malloc(sizeof(b1));
+    // memcpy(v1.val_base, &b1, sizeof(b1));
+    // v1.val_len = sizeof(b1);
+    // v2.val_base = malloc(sizeof(c1));
+    // memcpy(v2.val_base, &c1, sizeof(c1));
+    // v2.val_len = sizeof(c1);
+    // put(global_map, k0, v0, true);
+    // put(global_map, k1, v1, true);
+    // put(global_map, k2, v2, true);
+    // map_val_t tmp;
+    // tmp = get(global_map, k3);
+    // tmp = get(global_map, k2);
+    // //clear_map(global_map);
+
+    // invalidate_map(global_map);
+    // tmp = get(global_map, k1);
+    // if(tmp.val_base == NULL)
+    //     printf("NULL\n");
+    // else
+    //     printf("%d\n", *(int*)tmp.val_base);
+    // exit(0);
+}
